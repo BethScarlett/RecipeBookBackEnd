@@ -20,18 +20,18 @@ public class RecipeBookController {
     //CREATE
 
     @PostMapping("/recipe")
-    public Recipe createRecipe(@RequestBody Recipe newRecipe) {
-        return recipeBookService.createRecipe(newRecipe);
+    public Recipe createRecipe (@RequestBody Recipe recipe) {
+        return recipeBookService.createRecipe(recipe);
     }
 
     @PostMapping("/ingredient")
     public List<Ingredient> createIngredients (@RequestBody ArrayList<Ingredient> ingredients) {
-        return ingredients;
+        return recipeBookService.createIngredients(ingredients);
     }
 
     @PostMapping("/step")
     public List<Step> createSteps (@RequestBody ArrayList<Step> steps) {
-        return steps;
+        return recipeBookService.createSteps(steps);
     }
 
     //READ
@@ -42,21 +42,30 @@ public class RecipeBookController {
     }
 
     @GetMapping("/recipes/{id}")
-    public Recipe getRecipeById(@PathVariable long id) {
+    public Recipe getRecipeById (@PathVariable long id) {
         return recipeBookService.getRecipeById(id);
     }
 
+    @GetMapping("/ingredients/{id}")
+    public List<Ingredient> getAllIngredients(@PathVariable long id) {
+        return recipeBookService.getAllIngredients(id);
+    }
+
+    @GetMapping("/steps/{id}")
+    public List<Step> getAllSteps(@PathVariable long id) {
+        return recipeBookService.getAllSteps(id);
+    }
     //UPDATE
 
     @PutMapping("/recipes/{id}")
-    public void updateRecipe(@RequestBody Recipe newRecipe, @PathVariable long id) {
+    public void updateRecipe (@RequestBody Recipe newRecipe, @PathVariable long id) {
         recipeBookService.updateRecipe(newRecipe, id);
     }
 
     //DELETE
 
     @DeleteMapping("/recipes/{id}")
-    public String deleteRecipe(@PathVariable long id) {
+    public String deleteRecipe (@PathVariable long id) {
         recipeBookService.deleteRecipe(id);
         return "Recipe removed at id " + id;
     }

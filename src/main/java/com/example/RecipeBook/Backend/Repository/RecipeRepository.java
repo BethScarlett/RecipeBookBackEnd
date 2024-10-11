@@ -8,13 +8,16 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface RecipeBookRepository extends JpaRepository<Recipe, Long> {
+public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
     @Query(value = "SELECT * from recipe", nativeQuery = true)
-    List<Recipe> getAllRecipes();
+    List<Recipe> getAllRecipes ();
 
     @Query(value = "SELECT * FROM recipe WHERE id = ?1", nativeQuery = true)
-    Recipe getRecipeById(long id);
+    Recipe getRecipeById (long id);
 
-    void deleteRecipeById(long id);
+    @Query(value = "SELECT * FROM recipe_book.recipe ORDER BY id DESC LIMIT 1", nativeQuery = true)
+    Recipe getLastRecipe();
+
+    void deleteRecipeById (long id);
 }
