@@ -3,6 +3,8 @@ package com.example.RecipeBook.Backend.Controller;
 import com.example.RecipeBook.Backend.Model.Ingredient;
 import com.example.RecipeBook.Backend.Model.Recipe;
 import com.example.RecipeBook.Backend.Model.Step;
+import com.example.RecipeBook.Backend.Service.RecipeBookService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -11,6 +13,9 @@ import java.util.List;
 
 @RestController
 public class RecipeBookController {
+
+    @Autowired
+    RecipeBookService recipeBookService;
 
     //CREATE
 
@@ -32,8 +37,8 @@ public class RecipeBookController {
     //READ
 
     @GetMapping("/recipes")
-    public String getAllRecipes () {
-        return "These are the recipes";
+    public List<Recipe> getAllRecipes () {
+        return recipeBookService.getAllRecipes();
     }
 
     @GetMapping("/recipes/{id}")
