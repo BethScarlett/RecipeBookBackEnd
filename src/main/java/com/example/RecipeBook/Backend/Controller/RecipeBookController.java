@@ -55,11 +55,22 @@ public class RecipeBookController {
     public List<Step> getAllSteps(@PathVariable long id) {
         return recipeBookService.getAllSteps(id);
     }
+
     //UPDATE
 
     @PutMapping("/recipes/{id}")
     public void updateRecipe (@RequestBody Recipe newRecipe, @PathVariable long id) {
         recipeBookService.updateRecipe(newRecipe, id);
+    }
+
+    @PutMapping("/steps/{id}")
+    public void updateSteps (@RequestBody ArrayList<Step> steps, @PathVariable long id) {
+        recipeBookService.updateSteps(steps, id);
+    }
+
+    @PutMapping("/ingredients/{id}")
+    public void updateIngredients (@RequestBody ArrayList<Ingredient> ingredients, @PathVariable long id) {
+        recipeBookService.updateIngredients(ingredients, id);
     }
 
     //DELETE

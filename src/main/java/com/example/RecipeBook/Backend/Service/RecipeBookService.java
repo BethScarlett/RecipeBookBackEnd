@@ -73,21 +73,55 @@ public class RecipeBookService {
         recipeRepository.save(newRecipe);
     }
 
+    @Transactional
+    public void updateSteps (List<Step> steps, long recipe_id) {
+        Recipe recipe = recipeRepository.getRecipeById(recipe_id);
+
+        deleteSteps(recipe_id);
+
+        for (Step step : steps) {
+            step.setRecipe(recipe);
+            stepRepository.save(step);
+        }
+    }
+
+    @Transactional
+    public void updateIngredients (List<Ingredient> ingredients, long recipe_id) {
+        Recipe recipe = recipeRepository.getRecipeById(recipe_id);
+
+        deleteIngredients(recipe_id);
+
+        for (Ingredient ingredient : ingredients) {
+            ingredient.setRecipe(recipe);
+            ingredientRepository.save(ingredient);
+        }
+    }
+
     //Delete
 
     @Transactional
     public void deleteRecipe (long id) {
+        deleteIngredients(id);
+
+        deleteSteps(id);
+
+        recipeRepository.deleteRecipeById(id);
+    }
+
+    @Transactional
+    public void deleteSteps (long id) {
+        List<Long> ids = stepRepository.getAllIds(id);
+        for(long idToDelete: ids) {
+            stepRepository.deleteStepById(idToDelete);
+        }
+    }
+
+    @Transactional
+    public void deleteIngredients (long id) {
         List<Long> ids = ingredientRepository.getAllIds(id);
         for(long idToDelete: ids) {
             ingredientRepository.deleteIngredientById(idToDelete);
         }
-
-        ids = stepRepository.getAllIds(id);
-        for(long idToDelete: ids) {
-            stepRepository.deleteStepById(idToDelete);
-        }
-
-        recipeRepository.deleteRecipeById(id);
     }
 
 }
